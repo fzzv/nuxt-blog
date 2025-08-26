@@ -9,7 +9,9 @@
         <NuxtLink
           v-for="route in routes"
           :key="route.path"
-          :to="route.path"
+          :to="route.external ? undefined : route.path"
+          :href="route.external ? route.path : undefined"
+          :target="route.external ? '_blank' : undefined"
           :title="route.name"
           ml-5
         >
@@ -28,7 +30,8 @@ import useTheme from '~/composables/useTheme'
 const routes = reactive([
   { name: "文章", icon: "i-bi-book", path: "/posts"},
   { name: "标签", icon: "i-bi-tags", path: "/tags" },
-  { name: "关于", icon: "i-bi-emoji-kiss", path: "/about" }
+  { name: "关于", icon: "i-bi-emoji-kiss", path: "/about" },
+  { name: "RSS", icon: "i-bi-rss", path: "/rss.xml", external: true }
 ])
 
 // 监听 useDark 的变化

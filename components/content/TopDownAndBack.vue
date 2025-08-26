@@ -1,83 +1,13 @@
-<style scoped>
-.btn-nem {
-  width: 50px;
-  height: 50px;
-  border: none;
-  border-radius: 53px;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow:  6px 6px 12px #666666,
-              -6px -6px 12px #ffffff;
-}
-.btn-nem:hover {
-  border-radius: 53px;
-  background: linear-gradient(145deg, #ffffff, #e6e6e6);
-  box-shadow:  5px 5px 4px #666666,
-              -5px -5px 4px #ffffff;
-}
-.dark .btn-nem {
-  border-radius: 53px;
-  background: linear-gradient(145deg, #191919, #151515);
-  box-shadow:  6px 6px 12px #090909,
-              -6px -6px 12px #252525;
-}
-.dark .btn-nem:hover {
-  border-radius: 53px;
-  background: linear-gradient(145deg, #191919, #151515);
-  box-shadow:  5px 5px 4px #090909,
-              -5px -5px 4px #252525;
-}
-</style>
-
 <template>
   <div fixed right-8 bottom-8 hidden flex-col gap-3 md:flex md:block>
-    <button dark:text-gray-100 hover:cursor-pointer class="btn-nem" @click="goToTop" v-show="showTop">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="24" 
-        height="24"
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="#000000" 
-        dark:stroke="#F3F4F6" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-      >
-        <path d="M17 11l-5-5-5 5M17 18l-5-5-5 5"/>
-      </svg>
+    <button dark:text-gray-100 hover:cursor-pointer @click="goToTop" v-show="showTop">
+      <span text-5 icon-btn class="i-twemoji:top-arrow"></span>
     </button>
-    <button dark:text-gray-100 hover:cursor-pointer class="btn-nem" @click="goToDown" v-show="showDown">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="24" 
-        height="24" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="#000000" 
-        dark:stroke="#F3F4F6" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-      >
-        <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-      </svg>
+    <button dark:text-gray-100 hover:cursor-pointer @click="goToDown" v-show="showDown">
+      <span text-5 icon-btn class="i-twemoji:end-arrow"></span>
     </button>
-    <button dark:text-gray-100 hover:cursor-pointer class="btn-nem" @click="router.back()">
-      <svg 
-        xmlns="http://www.w3.org/2000/svg" 
-        width="24" 
-        height="24" 
-        viewBox="0 0 24 24" 
-        fill="none" 
-        stroke="#000000"
-        dark:stroke="#F3F4F6" 
-        stroke-width="2" 
-        stroke-linecap="round" 
-        stroke-linejoin="round"
-      >
-        <circle cx="12" cy="12" r="10"/>
-        <path d="M12 8l-4 4 4 4M16 12H9"/>
-      </svg>
+    <button dark:text-gray-100 hover:cursor-pointer @click="router.back()">
+      <span text-5 icon-btn class="i-twemoji:back-arrow"></span>
     </button>
   </div>
 </template>

@@ -34,4 +34,7 @@ export default defineNuxtConfig({
     },
     documentDriven: true,
   },
+  nitro: {
+    preset: 'vercel',
+  }
 })

@@ -35,6 +35,8 @@ export default defineNuxtConfig({
     documentDriven: true,
   },
   nitro: {
-    preset: 'vercel',
+    prerender: {
+      routes: ['/rss.xml'],
+    }
   }
 })

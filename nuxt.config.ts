@@ -9,6 +9,9 @@ export default defineNuxtConfig({
         { name: 'description', content: 'study programs and record life' },
         { name: 'keywords', content: 'fan, blog, record, notes, frontend' }
       ],
+      script: [
+        { src: 'https://cdn.apple-livephotoskit.com/lpk/1/livephotoskit.js', async: true },
+      ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/images/favicon.ico' },
         { rel: 'alternate', type: 'application/rss+xml', title: 'RSS Feed', href: '/rss.xml' },

@@ -29,6 +29,7 @@
 import useTheme from '~/composables/useTheme'
 const routes = reactive([
   { name: "文章", icon: "i-bi-book", path: "/posts"},
+  { name: "相册", icon: "i-bi-images", path: "/albums"},
   { name: "标签", icon: "i-bi-tags", path: "/tags" },
   { name: "关于", icon: "i-bi-emoji-kiss", path: "/about" },
   { name: "RSS", icon: "i-bi-rss", path: "/rss.xml", external: true }

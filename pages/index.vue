@@ -4,7 +4,14 @@
       <img w-40 h-40 border-rounded-40 transition-all duration-500 ease-in-out hover:transition hover:duration-500 hover:scale-150 src="/images/me.png" alt="" />
     </div>
     <div ref="divRef" px-4 text-center text-3xl md:text-4xl dark:text-gray-100>
-      <span op-0 transition-opacity font-mono v-for="(item, index) in title" :key="index" :style="`transition-delay: ${0.2 * (index + 1)}s`">{{ item }}</span>
+      <span
+        v-for="(item, index) in titleChars"
+        :key="`${item}-${index}`"
+        op-0 transition-opacity font-mono
+        :style="`transition-delay: ${0.2 * (index + 1)}s`"
+      >
+        {{ item }}
+      </span>
     </div>
     <!-- <div nextAnimate @click="handleScorll"><span icon-btn text-10 :class="randomIcon()"></span></div> -->
   </div>
@@ -15,6 +22,7 @@ import type { Ref } from 'vue'
 // const title = ref("星河随风而至，落日踏霞而归")
 // const title = ref("不是一个厉害的 FrontEnd Developer")
 const title = ref("📖 记录是抵抗遗忘和丧失唯一的方式")
+const titleChars = computed(() => Array.from(title.value))
 
 const divRef: Ref<HTMLDivElement | null> = ref(null)
 onMounted(() => {

@@ -1,17 +1,22 @@
-import { isDark } from '~/composables/dark'
-import { useStorage  } from '@vueuse/core'
-
 const useTheme = () => {
-  const theme = ref('dark')
+  const colorMode = useColorMode()
+  const theme = computed(() => colorMode.value)
+  const isDark = computed(() => colorMode.value === 'dark')
+  const ready = ref(false)
+
   onMounted(() => {
-    theme.value = useStorage('vueuse-color-scheme', '').value
+    ready.value = true
   })
-  watch(isDark, (newValue) => {
-    theme.value = newValue ? 'dark' : 'auto'
-  })
+
+  const toggleDark = () => {
+    colorMode.preference = isDark.value ? 'light' : 'dark'
+  }
+
   return {
     isDark,
-    theme
+    theme,
+    toggleDark,
+    ready
   }
 }
 

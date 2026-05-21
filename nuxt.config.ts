@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0',
     }
   },
+  css: ['uno.css'],
   modules: [
     '@unocss/nuxt',
     '@vueuse/nuxt',
@@ -26,6 +27,19 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxtjs/color-mode',
   ],
+  colorMode: {
+    classSuffix: '',
+  },
+  unocss: {
+    autoImport: false,
+  },
+  vite: {
+    define: {
+      __VUE_OPTIONS_API__: true,
+      __VUE_PROD_DEVTOOLS__: false,
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false,
+    },
+  },
   content: {
     highlight: {
       theme: 'vitesse-dark',  // All theme 可以进入 https://github.com/shikijs/shiki/blob/main/docs/themes.md 查看

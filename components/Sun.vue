@@ -1,6 +1,6 @@
 <template>
   <div fixed top-10 bottom-0 right-0 pointer-events-none class="-z-1">
-    <svg viewbox="-200 -150 400 300">
+    <svg viewBox="-200 -150 400 300">
       <defs>
         <line id="ray" x1="-5" x2="5"></line>
         <clipPath id="cp">
@@ -8,7 +8,7 @@
         </clipPath>
       </defs>
       <line id="line" x1="-76" x2="76"></line>
-      <text text-anchor="middle" y="45">开心每一天&nbsp;😅</text>
+      <text text-anchor="middle" y="45">开心每一天</text>
       <g id="sun" clip-path="url(#cp)">
         <g id="mover">
           <circle id="main" r="50"></circle>
@@ -44,9 +44,6 @@ svg {
 }
 text {
 	font: .875em century gothic, verdana, sans-serif;
-}
-#id {
-  stroke-width: 3;
 }
 #mover {
   animation: sun-motion 5s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;

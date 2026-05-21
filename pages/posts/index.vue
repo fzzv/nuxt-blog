@@ -24,15 +24,14 @@
         />
       </svg>
     </div>
-    <ContentList>
+    <ContentList path="/posts">
       <template #default="{ list }">
-        <div v-if="!filteredBlogPosts(list)?.length" text-2xl text-red text-center mt-50>
-          暂无数据
-        </div>
-        <div v-else>
-          <ArticleCard v-if="filteredBlogPosts(list)?.length" :list="sortArticles(filteredBlogPosts(list))" />
-          <ArticleCard v-else :list="sortArticles(list)" />
-        </div>
+        <template v-for="posts in [sortArticles(filteredBlogPosts(list))]" :key="posts.length">
+          <div v-if="!posts.length" text-2xl text-red text-center mt-50>
+            暂无数据
+          </div>
+          <ArticleCard v-else :list="posts" />
+        </template>
       </template>
     </ContentList>
   </div>
@@ -44,7 +43,7 @@ import ArticleCard from '~/components/ArticleCard.vue'
 
 // 通过时间排序
 function sortArticles(list: Article[]) {
-  return list.sort((a, b) => {
+  return [...list].sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime()
   })
 }
@@ -53,9 +52,15 @@ const searchValue = ref('')
 
 // 通过标题、描述、标签等搜索过滤博客文章
 const filteredBlogPosts = (list: Article[]) => {
-  return list.filter((frontMatter) => {
-    const searchContent = frontMatter.title + frontMatter.description + frontMatter.tags.join(' ')
-    return searchContent.toLowerCase().includes(searchValue.value.toLowerCase())
+  const keyword = searchValue.value.trim().toLowerCase()
+
+  if (!keyword) {
+    return list
+  }
+
+  return list.filter(({ title = '', description = '', tags = [] }) => {
+    const searchContent = `${title} ${description} ${tags.join(' ')}`.toLowerCase()
+    return searchContent.includes(keyword)
   })
 }
 </script>

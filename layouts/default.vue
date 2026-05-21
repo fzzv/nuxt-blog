@@ -6,16 +6,18 @@
     </main>
     <TheFooter />
     <!-- <Plum /> -->
-    <Sun v-show="theme !== 'dark' && width > 1000" v-motion-roll-visible-right />
-    <!-- <StarSky v-show="theme === 'dark'" /> -->
-    <Moon v-show="theme === 'dark' && width > 1000" v-motion-roll-visible-right />
+    <div v-if="ready && width > 1000">
+      <Sun v-if="theme !== 'dark'" v-motion-roll-visible-right />
+      <!-- <StarSky v-show="theme === 'dark'" /> -->
+      <Moon v-else v-motion-roll-visible-right />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import useTheme from '~/composables/useTheme'
 
-const { theme } = useTheme()
+const { theme, ready } = useTheme()
 
 const { width } = useWindowSize()
 </script>

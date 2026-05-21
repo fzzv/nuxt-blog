@@ -1,7 +1,5 @@
 <template>
-  <div fixed top-20 bottom-0 right-30 pointer-events-none class="-z-2 moon">
-
-  </div>
+  <div fixed top-20 bottom-0 right-30 pointer-events-none class="-z-2 moon"></div>
 </template>
 
 <style scoped>

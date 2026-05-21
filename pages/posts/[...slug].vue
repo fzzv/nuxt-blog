@@ -29,7 +29,6 @@
 <script lang="ts" setup>
 // const router = useRouter()
 const { path } = useRoute()
-console.log(path)
 
 const { data } = await useAsyncData(`content-${path}`, async () => {
   // 根据当前 path 找寻本文的位置

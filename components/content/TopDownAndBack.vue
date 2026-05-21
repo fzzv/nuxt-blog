@@ -25,7 +25,6 @@ onMounted(() => {
     const scrollHeight = document.documentElement.scrollHeight;
     const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
     const clientHeight = document.documentElement.clientHeight;
-    console.log(scrollTop, clientHeight, scrollHeight)
     if (scrollTop + clientHeight >= scrollHeight) showDown.value = false
     else showDown.value = true
   }

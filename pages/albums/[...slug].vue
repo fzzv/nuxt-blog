@@ -38,7 +38,6 @@ const { data: album } = await useAsyncData(`album-${slug}`, () =>
     .where({ _path: `/albums/${slug}` })
     .findOne()
 )
-console.log(album, 'album')
 
 const lightboxVisible = ref(false)
 const lightboxIndex = ref(0)

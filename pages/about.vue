@@ -34,8 +34,6 @@ import type { Ref } from 'vue'
 
 const heightRef: Ref<HTMLDivElement | null> = ref(null)
 const handleScorll = () => {
-  console.log(heightRef.value?.offsetHeight);
-  
   const height = heightRef.value?.offsetHeight
   // 盒子高度 + 100vh所减去的高度
   document.documentElement.scrollTop = height! + 140

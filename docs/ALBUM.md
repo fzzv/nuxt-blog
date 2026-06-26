@@ -1,6 +1,6 @@
 # 相册功能使用说明
 
-本博客的相册功能基于 `@nuxt/content` 的 YAML 数据集合，配合 `scripts/upload-photos.js` 一键将本地照片处理、上传至 Cloudflare R2，并生成相册元数据文件。
+本博客的相册功能基于 `@nuxt/content` 的 YAML 数据集合，配合上传脚本一键将本地照片处理、上传至对象存储，并生成相册元数据文件。
 
 ## 目录结构
 
@@ -15,13 +15,23 @@ components/
   ├─ PhotoWaterfall.vue # 详情页瀑布流
   ├─ PhotoLightbox.vue  # 大图查看器
   └─ LivePhoto.vue      # 实况照片播放器
-scripts/upload-photos.js
+scripts/upload-photos.js      # 上传到 Cloudflare R2
+scripts/upload-photos-cos.js  # 上传到腾讯云 COS
 types/Album.ts          # Album / Photo 类型定义
 ```
 
 ## 一、准备工作
 
-### 1. 配置 Cloudflare R2
+### 1. 配置对象存储
+
+支持两种上传脚本：
+
+- `scripts/upload-photos.js`：上传到 Cloudflare R2
+- `scripts/upload-photos-cos.js`：上传到腾讯云 COS
+
+二选一配置即可。
+
+#### Cloudflare R2
 
 复制 `.env.example` 为 `.env`，填入 R2 凭据：
 
@@ -35,12 +45,32 @@ R2_PUBLIC_URL=https://cdn.xyu.fan
 
 `R2_PUBLIC_URL` 是 R2 bucket 绑定的公开访问域名，上传后的 URL 形如 `${R2_PUBLIC_URL}/albums/<slug>/photo_001.jpg`。
 
+#### 腾讯云 COS
+
+复制 `.env.example` 为 `.env`，填入 COS 凭据：
+
+```bash
+COS_SECRET_ID=xxx
+COS_SECRET_KEY=xxx
+COS_BUCKET=blog-1250000000
+COS_REGION=ap-guangzhou
+COS_PUBLIC_URL=https://blog-1250000000.cos.ap-guangzhou.myqcloud.com
+```
+
+`COS_PUBLIC_URL` 可填自定义 CDN 域名；如果不填，脚本会默认拼出 `https://${COS_BUCKET}.cos.${COS_REGION}.myqcloud.com`。
+
 ### 2. 安装上传脚本依赖
 
-脚本用到 `@aws-sdk/client-s3`、`sharp`、`dotenv`，如未安装：
+R2 脚本用到 `@aws-sdk/client-s3`、`sharp`、`dotenv`：
 
 ```bash
 npm i -D @aws-sdk/client-s3 sharp dotenv
+```
+
+COS 脚本用到 `cos-nodejs-sdk-v5`、`sharp`、`dotenv`：
+
+```bash
+npm i -D cos-nodejs-sdk-v5 sharp dotenv
 ```
 
 ## 二、上传新相册
@@ -56,6 +86,25 @@ node scripts/upload-photos.js \
   [--cover <封面原文件名>]
 ```
 
+```bash
+node scripts/upload-photos-cos.js \
+  --album <slug> \
+  --dir <本地照片目录> \
+  --title "<相册标题>" \
+  [--description "<相册描述>"] \
+  [--cover <封面原文件名>] \
+  [--prefix <对象存储目录前缀>]
+```
+
+也可以通过 npm script 调用：
+
+```bash
+npm run upload:album:cos -- \
+  --album <slug> \
+  --dir <本地照片目录> \
+  --title "<相册标题>"
+```
+
 ### 参数说明
 
 | 参数 | 必填 | 说明 |
@@ -65,11 +114,21 @@ node scripts/upload-photos.js \
 | `--title` | ✅ | 相册显示标题（中英文均可） |
 | `--description` | ❌ | 相册描述，显示在详情页标题下方 |
 | `--cover` | ❌ | 封面原文件名（如 `IMG_0123.JPG`）；未指定时取第一张照片的缩略图 |
+| `--prefix` | ❌ | 仅 COS 脚本支持；对象存储中的目录前缀，默认 `albums` |
 
 ### 示例
 
 ```bash
 node scripts/upload-photos.js \
+  --album kyoto-2024 \
+  --dir "D:/Photos/京都" \
+  --title "京都漫游" \
+  --description "2024 秋季京都之行" \
+  --cover IMG_2046.JPG
+```
+
+```bash
+node scripts/upload-photos-cos.js \
   --album kyoto-2024 \
   --dir "D:/Photos/京都" \
   --title "京都漫游" \
@@ -86,12 +145,14 @@ node scripts/upload-photos.js \
    - 原图：最长边缩到 `2400px`，JPEG 质量 80
    - 缩略图：最长边缩到 `600px`，JPEG 质量 80
 3. **重命名**：按扫描顺序统一改名为 `photo_001` / `photo_002` …
-4. **上传到 R2** 的路径：
+4. **上传到对象存储** 的路径：
    ```
    albums/<slug>/photo_001.jpg          # 原图
    albums/<slug>/photo_001_thumb.jpg    # 缩略图
    albums/<slug>/photo_001.mov          # （若有配对视频）
    ```
+   - R2 脚本固定写入 `albums/<slug>/...`
+   - COS 脚本默认也写入 `albums/<slug>/...`，可通过 `--prefix` 改成其他前缀
 5. **生成 YAML**：写入 `content/albums/<slug>.yml`，`date` 自动取脚本运行当天日期。
 
 ## 三、实况照片（Live Photo）支持
@@ -175,6 +236,10 @@ rm -rf .nuxt/content-cache
 # 1. 选好本地照片，整理到一个目录
 # 2. 上传 + 生成 YAML
 node scripts/upload-photos.js \
+  --album <slug> --dir <path> --title "<标题>"
+
+# 或上传到腾讯云 COS
+node scripts/upload-photos-cos.js \
   --album <slug> --dir <path> --title "<标题>"
 
 # 3. （可选）手工微调 content/albums/<slug>.yml（加 caption、改 cover 等）

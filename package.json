@@ -24,8 +24,11 @@
     "@unocss/nuxt": "^0.41.1",
     "@vueuse/motion": "^2.0.0-beta.23",
     "@vueuse/nuxt": "^9.5.0",
+    "cos-nodejs-sdk-v5": "^2.15.4",
+    "dotenv": "^17.4.2",
     "feed": "^4.2.2",
     "nuxt": "^3.0.0",
+    "sharp": "^0.35.2",
     "typescript": "^5.9.2"
   }
 }

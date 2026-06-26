@@ -1,0 +1,17 @@
+title: "东澳岛"
+description: "东澳岛之旅"
+cover: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_001_thumb.jpg"
+date: 2026-06-26
+photos:
+  - url: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_001.jpg"
+    thumb: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_001_thumb.jpg"
+    width: 1600
+    height: 2400
+  - url: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_002.jpg"
+    thumb: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_002_thumb.jpg"
+    width: 1920
+    height: 1280
+  - url: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_003.jpg"
+    thumb: "https://xyufan-1258935921.cos.ap-guangzhou.myqcloud.com/albums/dongaodao/photo_003_thumb.jpg"
+    width: 1280
+    height: 1920
